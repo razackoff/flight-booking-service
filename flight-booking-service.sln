@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "flight-booking-service", "flight-booking-service\flight-booking-service.csproj", "{BACEFD2F-65EE-464C-8BE8-4161A8B3B239}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BACEFD2F-65EE-464C-8BE8-4161A8B3B239}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BACEFD2F-65EE-464C-8BE8-4161A8B3B239}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BACEFD2F-65EE-464C-8BE8-4161A8B3B239}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BACEFD2F-65EE-464C-8BE8-4161A8B3B239}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
