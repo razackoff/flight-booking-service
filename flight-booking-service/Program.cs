@@ -1,3 +1,5 @@
+using flight_booking_service.Repositories;
+using flight_booking_service.Services;
 using hotel_booking_service.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +17,18 @@ string connectionString = builder.Configuration.GetConnectionString("DefaultConn
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
+
+
+builder.Services.AddScoped<IAirlineRepository, AirlineRepository>();
+builder.Services.AddScoped<IDestinationRepository, DestinationRepository>();
+builder.Services.AddScoped<IFlightRepository, FlightRepository>();
+builder.Services.AddScoped<ITicketRepository, TicketRepository>();
+
+builder.Services.AddScoped<IAirlineService, AirlineService>();
+builder.Services.AddScoped<IDestinationService, DestinationService>();
+builder.Services.AddScoped<IFlightService, FlightService>();
+builder.Services.AddScoped<ITicketService, TicketService>();
+
 
 builder.Services.AddControllers();
 
