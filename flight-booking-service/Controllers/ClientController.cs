@@ -97,7 +97,7 @@ public class ClientController : ControllerBase
     }
     
     [HttpPost("SearchFlights")]
-    public IActionResult SearchFlights([FromQuery] FlightSearchParameters parameters)
+    public IActionResult SearchFlights([FromBody] FlightSearchParameters parameters)
     {
         var foundFlights = _flightService.SearchFlights(parameters);
         return Ok(foundFlights);
