@@ -11,8 +11,8 @@ string dbName = Environment.GetEnvironmentVariable("DATABASE_NAME");
 string dbUser = Environment.GetEnvironmentVariable("DATABASE_USER");
 string dbPassword = Environment.GetEnvironmentVariable("DATABASE_PASSWORD");
 
-//string connectionString = $"Host={dbHost};Port={dbPort};Database={dbName};Username={dbUser};Password={dbPassword};";
-string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+string connectionString = $"Host={dbHost};Port={dbPort};Database={dbName};Username={dbUser};Password={dbPassword};";
+//string connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
