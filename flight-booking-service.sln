@@ -1,6 +1,6 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "flight-booking-service", "flight-booking-service\flight-booking-service.csproj", "{BACEFD2F-65EE-464C-8BE8-4161A8B3B239}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "flight-booking-service", "flight-booking-service.csproj", "{BACEFD2F-65EE-464C-8BE8-4161A8B3B239}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
