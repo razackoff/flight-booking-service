@@ -1,3 +1,4 @@
+using flight_booking_service.DTOs;
 using flight_booking_service.Models;
 using flight_booking_service.Repositories;
 
@@ -10,11 +11,6 @@ public class FlightService : IFlightService
     public FlightService(IFlightRepository flightRepository)
     {
         _flightRepository = flightRepository;
-    }
-
-    public void AddFlight(Flight flight)
-    {
-        _flightRepository.Add(flight);
     }
 
     public Flight GetFlightById(string flightId)
@@ -32,9 +28,15 @@ public class FlightService : IFlightService
         return _flightRepository.GetAll();
     }
 
-    public void UpdateFlight(string flightId, Flight flight)
+    public string AddFlight(FlightDTO flightDTO)
     {
-        _flightRepository.Update(flight);
+        var flightID = _flightRepository.Add(flightDTO);
+        return flightID;
+    }
+    
+    public void UpdateFlight(string flightId, FlightDTO flightDTO)
+    {
+        _flightRepository.Update(flightId, flightDTO);
     }
 
     public void DeleteFlight(string flightId)

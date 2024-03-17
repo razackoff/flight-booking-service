@@ -1,12 +1,13 @@
+using flight_booking_service.DTOs;
 using flight_booking_service.Models;
 
 namespace flight_booking_service.Services;
 
 public interface IDestinationService
 {
-    void AddDestination(Destination destination);
-    Destination GetDestinationById(string destinationId);
-    IEnumerable<Destination> GetAllDestinations();
-    void UpdateDestination(string destinationId, Destination destination);
+    IEnumerable<DestinationWithCoordinatesDTO> GetAllDestinations();
+    DestinationWithCoordinatesDTO GetDestinationById(string destinationId);
+    string AddDestination(DestinationDTO destinationDTO);
+    void UpdateDestination(string destinationId, DestinationDTO destinationDTO);
     void DeleteDestination(string destinationId);
 }

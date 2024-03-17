@@ -1,13 +1,14 @@
+using flight_booking_service.DTOs;
 using flight_booking_service.Models;
 
 namespace flight_booking_service.Services;
 
 public interface IFlightService
 {
-    void AddFlight(Flight flight);
+    IEnumerable<Flight> GetAllFlights();
     Flight GetFlightById(string flightId);
     IEnumerable<Flight> SearchFlights(FlightSearchParameters parameters);
-    IEnumerable<Flight> GetAllFlights();
-    void UpdateFlight(string flightId, Flight flight);
+    string AddFlight(FlightDTO flightDTO);
+    void UpdateFlight(string flightId, FlightDTO flightDTO);
     void DeleteFlight(string flightId);
 }

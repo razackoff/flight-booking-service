@@ -1,3 +1,4 @@
+using flight_booking_service.DTOs;
 using flight_booking_service.Models;
 using flight_booking_service.Repositories;
 
@@ -12,24 +13,24 @@ public class DestinationService : IDestinationService
         _destinationRepository = destinationRepository;
     }
 
-    public void AddDestination(Destination destination)
+    public IEnumerable<DestinationWithCoordinatesDTO> GetAllDestinations()
     {
-        _destinationRepository.Add(destination);
+        return _destinationRepository.GetAll();
     }
-
-    public Destination GetDestinationById(string destinationId)
+    
+    public DestinationWithCoordinatesDTO GetDestinationById(string destinationId)
     {
         return _destinationRepository.GetById(destinationId);
     }
 
-    public IEnumerable<Destination> GetAllDestinations()
+    public string AddDestination(DestinationDTO destinationDTO)
     {
-        return _destinationRepository.GetAll();
+        return _destinationRepository.Add(destinationDTO);
     }
-
-    public void UpdateDestination(string destinationId, Destination destination)
+    
+    public void UpdateDestination(string destinationId, DestinationDTO destinationDTO)
     {
-        _destinationRepository.Update(destination);
+        _destinationRepository.Update(destinationId, destinationDTO);
     }
 
     public void DeleteDestination(string destinationId)

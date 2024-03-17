@@ -1,3 +1,4 @@
+using flight_booking_service.DTOs;
 using flight_booking_service.Models;
 using flight_booking_service.Repositories;
 
@@ -11,25 +12,26 @@ public class AirlineService : IAirlineService
     {
         _airlineRepository = airlineRepository;
     }
-
-    public void AddAirline(Airline airline)
-    {
-        _airlineRepository.Add(airline);
-    }
-
-    public Airline GetAirlineById(string airlineId)
-    {
-        return _airlineRepository.GetById(airlineId);
-    }
-
+    
     public IEnumerable<Airline> GetAllAirlines()
     {
         return _airlineRepository.GetAll();
     }
-
-    public void UpdateAirline(string airlineId, Airline airline)
+    
+    public Airline GetAirlineById(string airlineId)
     {
-        _airlineRepository.Update(airline);
+        return _airlineRepository.GetById(airlineId);
+    }
+    
+    public string AddAirline(AirlineDTO airlineDto)
+    {
+        var airlineId = _airlineRepository.Add(airlineDto);
+        return airlineId;
+    }
+
+    public void UpdateAirline(string airlineId, AirlineDTO airlineDTO)
+    {
+        _airlineRepository.Update(airlineId, airlineDTO);
     }
 
     public void DeleteAirline(string airlineId)

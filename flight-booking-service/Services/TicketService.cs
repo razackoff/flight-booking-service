@@ -1,3 +1,4 @@
+using flight_booking_service.DTOs;
 using flight_booking_service.Models;
 using flight_booking_service.Repositories;
 
@@ -24,22 +25,20 @@ public class TicketService : ITicketService
     
     public Ticket BookTicket(TicketBookingRequest bookingRequest)
     {
-        // Валидация и обработка запроса
-        // Реализация может варьироваться в зависимости от требований системы
-        // Пример:
         return _ticketRepository.BookTicket(bookingRequest);
     }
     
-    public void AddTicket(Ticket ticket)
+    public string AddTicket(TicketDTO ticketDTO)
     {
-        _ticketRepository.Add(ticket);
+        var ticketID = _ticketRepository.Add(ticketDTO);
+        return ticketID;
     }
     
-    public void UpdateTicket(string ticketId, Ticket ticket)
+    public void UpdateTicket(string ticketId, TicketDTO ticketDTO)
     {
-        _ticketRepository.Update(ticket);
+        _ticketRepository.Update(ticketId, ticketDTO);
     }
-
+ 
     public void DeleteTicket(string ticketId)
     {
         _ticketRepository.Delete(ticketId);

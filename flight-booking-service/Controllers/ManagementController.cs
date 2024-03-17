@@ -1,3 +1,5 @@
+using flight_booking_service.DTOs;
+using flight_booking_service.Exceptions;
 using flight_booking_service.Models;
 using flight_booking_service.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -43,24 +45,73 @@ public class ManagementController : ControllerBase
     }
 
     [HttpPost("AddAirline")]
-    public IActionResult AddAirline([FromBody] Airline airline)
+    public IActionResult AddAirline([FromBody] AirlineDTO airlineDTO)
     {
-        _airlineService.AddAirline(airline);
-        return Ok();
+        try
+        {
+            var airlineId = _airlineService.AddAirline(airlineDTO);
+            return Ok(airlineId);
+        }
+        catch (ArgumentException ex)
+        {
+            // Логирование ошибки
+            return BadRequest(ex.Message); // Отправить сообщение об ошибке клиенту
+        }
+        catch (Exception ex)
+        {
+            // Логирование ошибки
+            return StatusCode(500, "Internal server error"); // Вернуть статус код 500 с общим сообщением об ошибке
+        }
     }
 
     [HttpPut("UpdateAirline")]
-    public IActionResult UpdateAirline([FromQuery] string airlineId, [FromBody] Airline airline)
+    public IActionResult UpdateAirline([FromQuery] string airlineId, [FromBody] AirlineDTO airlineDTO)
     {
-        _airlineService.UpdateAirline(airlineId, airline);
-        return Ok();
+        try
+        {
+            _airlineService.UpdateAirline(airlineId, airlineDTO);
+            return Ok();
+        }
+        catch (ArgumentException ex)
+        {
+            // Логирование ошибки
+            return BadRequest(ex.Message); // Отправить сообщение об ошибке клиенту
+        }
+        catch (NotFoundException ex)
+        {
+            // Логирование ошибки
+            return NotFound(ex.Message); // Отправить сообщение об ошибке клиенту
+        }
+        catch (Exception ex)
+        {
+            // Логирование ошибки
+            return StatusCode(500, "Internal server error"); // Вернуть статус код 500 с общим сообщением об ошибке
+        }
     }
 
     [HttpDelete("DeleteAirline")]
     public IActionResult DeleteAirline([FromQuery] string airlineId)
     {
-        _airlineService.DeleteAirline(airlineId);
-        return Ok();
+        try
+        {
+            _airlineService.DeleteAirline(airlineId); 
+            return Ok();
+        }
+        catch (ArgumentException ex)
+        {
+            // Логирование ошибки
+            return BadRequest(ex.Message); // Отправить сообщение об ошибке клиенту
+        }
+        catch (NotFoundException ex)
+        {
+            // Логирование ошибки
+            return NotFound(ex.Message); // Отправить сообщение об ошибке клиенту
+        }
+        catch (Exception ex)
+        {
+            // Логирование ошибки
+            return StatusCode(500, "Internal server error"); // Вернуть статус код 500 с общим сообщением об ошибке
+        }
     }
     
     //Ticket
@@ -81,27 +132,76 @@ public class ManagementController : ControllerBase
     }
     
     [HttpPost("AddTicket")]
-    public IActionResult AddTicket([FromBody] Ticket ticket)
+    public IActionResult AddTicket([FromBody] TicketDTO ticketDTO)
     {
-        _ticketService.AddTicket(ticket);
-        return Ok();
+        try
+        {
+            var ticketID = _ticketService.AddTicket(ticketDTO);
+            return Ok(ticketID);
+        }
+        catch (ArgumentException ex)
+        {
+            // Логирование ошибки
+            return BadRequest(ex.Message); // Отправить сообщение об ошибке клиенту
+        }
+        catch (Exception ex)
+        {
+            // Логирование ошибки
+            return StatusCode(500, "Internal server error"); // Вернуть статус код 500 с общим сообщением об ошибке
+        }
     }
 
     [HttpPut("UpdateTicket")]
-    public IActionResult UpdateTicket([FromQuery] string ticketId, [FromBody] Ticket ticket)
-    {
-        _ticketService.UpdateTicket(ticketId, ticket);
-        return Ok();
+    public IActionResult UpdateTicket([FromQuery] string ticketId, [FromBody] TicketDTO ticketDTO)
+    {   
+        try
+        {
+            _ticketService.UpdateTicket(ticketId, ticketDTO);
+            return Ok();
+        }
+        catch (ArgumentException ex)
+        {
+            // Логирование ошибки
+            return BadRequest(ex.Message); // Отправить сообщение об ошибке клиенту
+        }
+        catch (NotFoundException ex)
+        {
+            // Логирование ошибки
+            return NotFound(ex.Message); // Отправить сообщение об ошибке клиенту
+        }
+        catch (Exception ex)
+        {
+            // Логирование ошибки
+            return StatusCode(500, "Internal server error"); // Вернуть статус код 500 с общим сообщением об ошибке
+        }
     }
 
     [HttpDelete("DeleteTicket")]
     public IActionResult DeleteTicket([FromQuery] string ticketId)
     {
-        _ticketService.DeleteTicket(ticketId);
-        return Ok();
+        try
+        {
+            _ticketService.DeleteTicket(ticketId);
+            return Ok();
+        }
+        catch (ArgumentException ex)
+        {
+            // Логирование ошибки
+            return BadRequest(ex.Message); // Отправить сообщение об ошибке клиенту
+        }
+        catch (NotFoundException ex)
+        {
+            // Логирование ошибки
+            return NotFound(ex.Message); // Отправить сообщение об ошибке клиенту
+        }
+        catch (Exception ex)
+        {
+            // Логирование ошибки
+            return StatusCode(500, "Internal server error"); // Вернуть статус код 500 с общим сообщением об ошибке
+        }
     }
     
-    //Flight
+    //Flights
     [HttpGet("GetAllFlights")]
     public IActionResult GetAllFlights()
     {
@@ -119,24 +219,73 @@ public class ManagementController : ControllerBase
     }
 
     [HttpPost("AddFlight")]
-    public IActionResult AddFlight([FromBody] Flight flight)
+    public IActionResult AddFlight([FromBody] FlightDTO flightDTO)
     {
-        _flightService.AddFlight(flight);
-        return Ok();
+        try
+        {
+            var flightID = _flightService.AddFlight(flightDTO);
+            return Ok(flightID);
+        }
+        catch (ArgumentException ex)
+        {
+            // Логирование ошибки
+            return BadRequest(ex.Message); // Отправить сообщение об ошибке клиенту
+        }
+        catch (Exception ex)
+        {
+            // Логирование ошибки
+            return StatusCode(500, "Internal server error"); // Вернуть статус код 500 с общим сообщением об ошибке
+        }
     }
 
     [HttpPut("UpdateFlight")]
-    public IActionResult UpdateFlight([FromQuery] string flightId, [FromBody] Flight flight)
+    public IActionResult UpdateFlight([FromQuery] string flightId, [FromBody] FlightDTO flightDTO)
     {
-        _flightService.UpdateFlight(flightId, flight);
-        return Ok();
+        try
+        {
+            _flightService.UpdateFlight(flightId, flightDTO);
+            return Ok();
+        }
+        catch (ArgumentException ex)
+        {
+            // Логирование ошибки
+            return BadRequest(ex.Message); // Отправить сообщение об ошибке клиенту
+        }
+        catch (NotFoundException ex)
+        {
+            // Логирование ошибки
+            return NotFound(ex.Message); // Отправить сообщение об ошибке клиенту
+        }
+        catch (Exception ex)
+        {
+            // Логирование ошибки
+            return StatusCode(500, "Internal server error"); // Вернуть статус код 500 с общим сообщением об ошибке
+        }
     }
 
     [HttpDelete("DeleteFlight")]
     public IActionResult DeleteFlight([FromQuery] string flightId)
     {
-        _flightService.DeleteFlight(flightId);
-        return Ok();
+        try
+        {
+            _flightService.DeleteFlight(flightId);
+            return Ok();
+        }
+        catch (ArgumentException ex)
+        {
+            // Логирование ошибки
+            return BadRequest(ex.Message); // Отправить сообщение об ошибке клиенту
+        }
+        catch (NotFoundException ex)
+        {
+            // Логирование ошибки
+            return NotFound(ex.Message); // Отправить сообщение об ошибке клиенту
+        }
+        catch (Exception ex)
+        {
+            // Логирование ошибки
+            return StatusCode(500, "Internal server error"); // Вернуть статус код 500 с общим сообщением об ошибке
+        }
     }
     
     //Destination
@@ -157,23 +306,72 @@ public class ManagementController : ControllerBase
     }
 
     [HttpPost("AddDestination")]
-    public IActionResult AddDestination([FromBody] Destination destination)
+    public IActionResult AddDestination([FromBody] DestinationDTO destinationDTO)
     {
-        _destinationService.AddDestination(destination);
-        return Ok();
+        try
+        {    
+            var destinationID = _destinationService.AddDestination(destinationDTO);
+            return Ok(destinationID);
+        }
+        catch (ArgumentException ex)
+        {
+            // Логирование ошибки
+            return BadRequest(ex.Message); // Отправить сообщение об ошибке клиенту
+        }
+        catch (Exception ex)
+        {
+            // Логирование ошибки
+            return StatusCode(500, $"Internal server error, {ex.Message}"); // Вернуть статус код 500 с общим сообщением об ошибке
+        }
     }
     
     [HttpPut("UpdateDestination")]
-    public IActionResult UpdateDestination([FromQuery] string destinationId, [FromBody] Destination destination)
+    public IActionResult UpdateDestination([FromQuery] string destinationId, [FromBody] DestinationDTO destinationDTO)
     {
-        _destinationService.UpdateDestination(destinationId, destination);
-        return Ok();
+        try
+        {
+            _destinationService.UpdateDestination(destinationId, destinationDTO);
+            return Ok();
+        }
+        catch (ArgumentException ex)
+        {
+            // Логирование ошибки
+            return BadRequest(ex.Message); // Отправить сообщение об ошибке клиенту
+        }
+        catch (NotFoundException ex)
+        {
+            // Логирование ошибки
+            return NotFound(ex.Message); // Отправить сообщение об ошибке клиенту
+        }
+        catch (Exception ex)
+        {
+            // Логирование ошибки
+            return StatusCode(500, "Internal server error"); // Вернуть статус код 500 с общим сообщением об ошибке
+        }
     }
 
     [HttpDelete("DeleteDestination")]
     public IActionResult DeleteDestination([FromQuery] string destinationId)
     {
-        _destinationService.DeleteDestination(destinationId);
-        return Ok();
+        try
+        {
+            _destinationService.DeleteDestination(destinationId);
+            return Ok();
+        }
+        catch (ArgumentException ex)
+        {
+            // Логирование ошибки
+            return BadRequest(ex.Message); // Отправить сообщение об ошибке клиенту
+        }
+        catch (NotFoundException ex)
+        {
+            // Логирование ошибки
+            return NotFound(ex.Message); // Отправить сообщение об ошибке клиенту
+        }
+        catch (Exception ex)
+        {
+            // Логирование ошибки
+            return StatusCode(500, "Internal server error"); // Вернуть статус код 500 с общим сообщением об ошибке
+        }
     }
 }

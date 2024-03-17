@@ -12,6 +12,7 @@ public class ApplicationDbContext : DbContext
     
     public DbSet<Airline> Airlines { get; set; }
     public DbSet<Destination> Destinations { get; set; }
+    public DbSet<Coordinates> Coordinates { get; set; }
     public DbSet<Flight> Flights { get; set; }
     public DbSet<Ticket> Tickets { get; set; }
 

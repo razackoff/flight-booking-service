@@ -1,3 +1,5 @@
+using flight_booking_service.DTOs;
+using flight_booking_service.Exceptions;
 using flight_booking_service.Models;
 using hotel_booking_service.Data;
 using Microsoft.EntityFrameworkCore;
@@ -35,48 +37,78 @@ public class FlightRepository : IFlightRepository
             .ToList();
     }
     
-    public void Add(Flight flight)
+    public string Add(FlightDTO flightDTO)
     {
-        if (flight == null)
-            throw new ArgumentNullException(nameof(flight));
+        if (flightDTO == null)
+            throw new ArgumentNullException(nameof(flightDTO));
 
+        var flightID = Guid.NewGuid().ToString();
+
+        var flight = new Flight
+        {
+            Id = flightID,
+            DepartureLocation = flightDTO.DepartureLocation,
+            Destination = flightDTO.Destination,
+            DepartureDateTime = flightDTO.DepartureDateTime,
+            ArrivalDateTime  = flightDTO.ArrivalDateTime,
+            AvailableEconomySeats = flightDTO.AvailableEconomySeats,
+            AvailableBusinessSeats = flightDTO.AvailableBusinessSeats,
+            AvailableFirstClassSeats = flightDTO.AvailableFirstClassSeats,
+            EconomyClassPrice = flightDTO.EconomyClassPrice,
+            BusinessClassPrice = flightDTO.BusinessClassPrice,
+            FirstClassPrice = flightDTO.FirstClassPrice,
+            AirlineId = flightDTO.AirlineId,
+            AircraftType = flightDTO.AircraftType
+        };
+        
         _context.Flights.Add(flight);
         _context.SaveChanges();
+
+        return flightID;
     }
     
-    public void Update(Flight flight)
+    public void Update(string flightID, FlightDTO flightDTO)
     {
-        if (flight == null)
-            throw new ArgumentNullException(nameof(flight));
+        if (flightDTO == null)
+            throw new ArgumentNullException(nameof(flightDTO));
 
-        var existingFlight = _context.Flights.FirstOrDefault(f => f.Id == flight.Id);
+        var existingFlight = _context.Flights.FirstOrDefault(f => f.Id == flightID);
+        
         if (existingFlight != null)
         {
-            existingFlight.DepartureLocation = flight.DepartureLocation;
-            existingFlight.Destination = flight.Destination;
-            existingFlight.DepartureDateTime = flight.DepartureDateTime;
-            existingFlight.ArrivalDateTime = flight.ArrivalDateTime;
-            existingFlight.AvailableEconomySeats = flight.AvailableEconomySeats;
-            existingFlight.AvailableBusinessSeats = flight.AvailableBusinessSeats;
-            existingFlight.AvailableFirstClassSeats = flight.AvailableFirstClassSeats;
-            existingFlight.EconomyClassPrice = flight.EconomyClassPrice;
-            existingFlight.BusinessClassPrice = flight.BusinessClassPrice;
-            existingFlight.FirstClassPrice = flight.FirstClassPrice;
-            existingFlight.AirlineId = flight.AirlineId;
-            existingFlight.AircraftType = flight.AircraftType;
-            // Update other fields as needed
+            existingFlight.DepartureLocation = flightDTO.DepartureLocation;
+            existingFlight.Destination = flightDTO.Destination;
+            existingFlight.DepartureDateTime = flightDTO.DepartureDateTime;
+            existingFlight.ArrivalDateTime = flightDTO.ArrivalDateTime;
+            existingFlight.AvailableEconomySeats = flightDTO.AvailableEconomySeats;
+            existingFlight.AvailableBusinessSeats = flightDTO.AvailableBusinessSeats;
+            existingFlight.AvailableFirstClassSeats = flightDTO.AvailableFirstClassSeats;
+            existingFlight.EconomyClassPrice = flightDTO.EconomyClassPrice;
+            existingFlight.BusinessClassPrice = flightDTO.BusinessClassPrice;
+            existingFlight.FirstClassPrice = flightDTO.FirstClassPrice;
+            existingFlight.AirlineId = flightDTO.AirlineId;
+            existingFlight.AircraftType = flightDTO.AircraftType;
 
             _context.SaveChanges();
         }
+        else
+        {
+            throw new NotFoundException($"Flight with ID {flightID} not found.");
+        }
     }
 
-    public void Delete(string id)
+    public void Delete(string flightID)
     {
-        var flight = _context.Flights.FirstOrDefault(f => f.Id == id);
+        var flight = _context.Flights.FirstOrDefault(f => f.Id == flightID);
+        
         if (flight != null)
         {
             _context.Flights.Remove(flight);
             _context.SaveChanges();
+        }
+        else
+        {
+            throw new NotFoundException($"Flight with ID {flightID} not found.");
         }
     }
 }

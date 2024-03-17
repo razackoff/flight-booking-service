@@ -1,3 +1,5 @@
+using flight_booking_service.DTOs;
+using flight_booking_service.Exceptions;
 using flight_booking_service.Models;
 using hotel_booking_service.Data;
 using Microsoft.EntityFrameworkCore;
@@ -13,48 +15,68 @@ public class AirlineRepository : IAirlineRepository
         _context = context;
     }
 
-    public void Add(Airline airline)
+    public IEnumerable<Airline> GetAll()
     {
-        if (airline == null)
-            throw new ArgumentNullException(nameof(airline));
-
-        _context.Airlines.Add(airline);
-        _context.SaveChanges();
+        return _context.Airlines.ToList();
     }
-
+    
     public Airline GetById(string id)
     {
         return _context.Airlines.FirstOrDefault(a => a.Id == id);
     }
 
-    public IEnumerable<Airline> GetAll()
+    public string Add(AirlineDTO airlineDto)
     {
-        return _context.Airlines.ToList();
+        if (airlineDto == null)
+            throw new ArgumentNullException(nameof(airlineDto));
+
+        var airlineID = Guid.NewGuid().ToString();
+        
+        var airline = new Airline
+        {
+            Id = airlineID,
+            Name = airlineDto.Name,
+            Country = airlineDto.Country,
+            Description = airlineDto.Description
+        };
+        
+        _context.Airlines.Add(airline);
+        _context.SaveChanges();
+
+        return airlineID;
     }
-
-    public void Update(Airline airline)
+    
+    public void Update(string airlineId, AirlineDTO airlineDTO)
     {
-        if (airline == null)
-            throw new ArgumentNullException(nameof(airline));
+        if (airlineDTO == null)
+            throw new ArgumentNullException(nameof(airlineDTO));
 
-        var existingAirline = _context.Airlines.FirstOrDefault(a => a.Id == airline.Id);
+        var existingAirline = _context.Airlines.FirstOrDefault(a => a.Id == airlineId);
         if (existingAirline != null)
         {
-            existingAirline.Name = airline.Name;
-            existingAirline.Country = airline.Country;
-            existingAirline.Description = airline.Description;
+            existingAirline.Name = airlineDTO.Name;
+            existingAirline.Country = airlineDTO.Country;
+            existingAirline.Description = airlineDTO.Description;
 
             _context.SaveChanges();
         }
+        else
+        {
+            throw new NotFoundException($"Airline with ID {airlineId} not found.");
+        }
     }
 
-    public void Delete(string id)
+    public void Delete(string airlineId)
     {
-        var airline = _context.Airlines.FirstOrDefault(a => a.Id == id);
+        var airline = _context.Airlines.FirstOrDefault(a => a.Id == airlineId);
         if (airline != null)
         {
             _context.Airlines.Remove(airline);
             _context.SaveChanges();
+        }
+        else
+        {
+            throw new NotFoundException($"Airline with ID {airlineId} not found.");
         }
     }
 }
