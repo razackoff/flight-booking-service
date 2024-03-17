@@ -6,10 +6,10 @@ EXPOSE 7148
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["flight-booking-service.csproj", "flight-booking-service"]
-RUN dotnet restore "flight-booking-service/flight-booking-service.csproj"
+COPY ["flight-booking-service.csproj", "./"]
+RUN dotnet restore "flight-booking-service.csproj"
 COPY . .
-WORKDIR "/src/flight-booking-service"
+WORKDIR "/src/"
 RUN dotnet build "flight-booking-service.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
